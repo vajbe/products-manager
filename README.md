@@ -1,7 +1,3 @@
-ProductsManager
- *This project is built on MEAN stack.
-
-Features
- *Add product to the store
- *Search for the product and update data
+Products Manager is fully built on JS frameworks like Angular, Express, Node. This uses Mongo db as a data store.
+Features include storing new product to the data store,  fetching product details and updating it.
  
