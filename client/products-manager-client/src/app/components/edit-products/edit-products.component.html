@@ -1,0 +1,31 @@
+<div class="edit-container">
+  <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="productId">Product Id</label>
+        <input type="text" formControlName="product_id" class="form-control" id="productId" placeholder="Product Id">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="quantity">Quantity</label>
+        <input type="text" formControlName="quantity" class="form-control" id="quantity" placeholder="Quantity">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="productName">Product Name</label>
+      <input type="text" formControlName="product_name" class="form-control" id="productName"
+        placeholder="DELL Lattitude X128">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="costPrice">Cost Price</label>
+        <input type="text" formControlName="cost_price" class="form-control" id="costPrice" placeholder="Cost Price">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="sellingPrice">Selling Price</label>
+        <input type="text" formControlName="selling_price" class="form-control" id="sellingPrice"
+          placeholder="Selling Price">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>

@@ -1,13 +1,9 @@
 const ProductModel = require('../models/Product');
+const helper = require('./ProductControllerHelper');
 
 exports.view = (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-
     const keyword = req.params.keyword;
-
+    helper.configureHeader(res);
     ProductModel.find({
             product_name: new RegExp(keyword, 'i')
         },
@@ -26,14 +22,11 @@ exports.view = (req, res) => {
 }
 
 exports.edit = (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 
-    const productUpdate = req.body;
+    let productUpdate = Object.keys(req.body)[0];
+    productUpdate = JSON.parse(productUpdate);
     const productId = req.params.productId;
-    console.log(productUpdate);
+    helper.configureHeader(res);
     ProductModel.update({
         product_id: productId
     }, productUpdate, (err, numAffectedRows) => {
@@ -46,27 +39,31 @@ exports.edit = (req, res) => {
     });
 }
 exports.welcomeRoute = (req, res) => {
+    helper.configureHeader(res);
     res.send(JSON.parse('{"response" : "Welcome to Product Management System."}'));
 }
 
-exports.add = (req, res) => {
+exports.nextProductId = (req, res) => {
+
+    helper.configureHeader(res);
+
     ProductModel.find({}).sort({
         product_id: -1
     }).limit(1).then(products => {
-        const maxId = products[0].product_id;
-        const productObject = {
-            // product_id: parseInt(maxId)+1,
-            // product_name: 'Acer Hashtag V728',
-            // selling_price: 500,
-            // cost_price: 200,
-            // quantity: 10
-        };
-        insertItem(productObject, req, res);
+        let maxId = products[0].product_id;
+        maxId = parseInt(maxId) + 1;
+        res.status(200)
+            .send(JSON.parse(`{"productId" : ${maxId}}`));
     });
 }
 
-const insertItem = (productObject, req, res) => {
-    ProductModel.insertMany(productObject, (err, response) => {
+exports.add = (req, res) => {
+
+    let productObject = Object.keys(req.body)[0];
+    productObject = JSON.parse(productObject);
+    res = helper.configureHeader(res);
+
+    ProductModel.insertMany(productObject, (err, result) => {
         if (err) {
             res.status(500).send(err);
         } else {
