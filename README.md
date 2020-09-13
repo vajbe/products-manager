@@ -1,4 +1,4 @@
-#Products Manager
+#ProductsManager
 This project is built on MEAN stack.
 #Features
  * Add product to the store
